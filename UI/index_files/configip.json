@@ -1,0 +1,10 @@
+{
+   "gearmanip":"127.0.0.1",
+   "gearmanport":4730,
+   "serverip":"127.0.0.1",
+   "serverport":7000,
+   "tcp_type":"websocket",
+   "gearmanworker_apiai":"alligator",
+   "googlesearchkey":"AIzaSyCJbOid3rge9DY_N9p4_cDDaHYWd0ompQ8",
+   "collection_name":"db_alligator"
+}

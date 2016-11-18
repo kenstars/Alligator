@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans">
+	<link href="css/icon.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/materialize.css">
+	<script src="index_files/jquery-2.js"></script>
+	<link rel="stylesheet" href="css/googleapis.css">
+	 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	  <link href="css/style.css" rel="stylesheet" type="text/css" />
+	  <script type="text/javascript" src="http://www.datejs.com/build/date.js"></script>
+</head>
+<body>
+	<div class="drop_overlay"></div>
+	<header>
+		<div class="row c-header" style="padding: 28px 0px!important; background: #cacaca; color: #fff;">
+			<div>
+				
+			</div>
+		<div class="col s8 offset-s1" style="height: 27px; padding-top: 0px;">
+		    <span style=" display: inline-block; height: 100%; vertical-align: middle;"></span>
+		    <a href="."><img src="image/logo.png" alt="Logo" style="position: relative; bottom: 19px; padding-left: 0px;"></a>
+		</div>
+		<div class="col s3" style="padding-top: 6px;">
+			<div class="row" style="margin-bottom: 0px; font-size: 13px; letter-spacing: 0px; color: #000; font-weight: bold; text-transform: uppercase; font-family: 'PT Sans'; font-style: normal;">
+				<div class="col s8" style="text-align: right; padding-right: 18px;">
+					 Communication Status 
+				</div>
+				<div class="col s2" style="line-height: 16px;">
+					<div title="Online" class="com-status btn-floating waves-effect waves-light red" style="width:10px; height: 10px;">
+						<i class="material-icons"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	    </div>		
+	</header>
+  <script src="index_files/jquery.min.js" type="text/javascript"></script>
+  <script src="index_files/bootstrap.min.js" type="text/javascript"></script>
+
+
+ <div class="well wrapper pull-right" id="msgWindow">
+		<div id="msgbox" class="inner">
+ 		
+<!-- 		<div class="admin-chat">
+ 			<div class="well inner-admin-chat">meeeeeeeeeeeeee
+ 				<span class="admin-name">me</span>
+ 				<span class="time-stamp">10:10am</span>
+
+			</div>
+		</div>
+
+		<div class="user-chat">
+ 			<div class="well inner-user-chat"> useruser
+ 				<span class="user-name">Bot</span>
+ 				<span class="time-stamp">10:10am</span>
+			</div>
+		</div>
+		
+		<div class="admin-chat">
+ 		<div class="well inner-admin-chat"> me
+ 			<span class="admin-name">me</span>
+ 			<span class="time-stamp">10:10am</span></div>
+ 		</div>	
+
+	</div>-->
+
+		<div class="text">
+			<input id="input_text" type="text" name="query" placeholder="Type your message" /> 
+			<img src="image/emoji.png" class="emoji" />
+		</div>
+	
+		
+		<input type="button" class="send-button" name="">
+	
+	
+		<div class="bot-img">
+			<img src="image/bot.gif"/>
+		</div>
+
+	</div>
+</div>
+<div class="bot-img-only" >
+ 		<img src="image/bot.gif"/>
+</div>
+
+<script type="text/javascript">
+	$(".close").click(function() 
+	{
+		$(".wrapper").hide();// body...
+		$(".bot-img-only").show();
+	});
+
+	$(".bot-img-only").click(function() 
+	{	console.log("asdasdasd");
+		$("#msgWindow").show();// body...
+		$(".drop_overlay").show();
+		$(".bot-img-only").hide();
+	});
+	$(".drop_overlay, .bot-img").click(function() {
+		$(".bot-img-only").show();
+		$("#msgWindow").hide();
+		$(".drop_overlay").hide();
+	});
+</script>
+        <script src="index_files/socket.js"></script>
+        <script src="index_files/main.js"></script>
+</body>
+</html>
