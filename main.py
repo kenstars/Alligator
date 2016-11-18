@@ -13,7 +13,7 @@ class Alligator(object):
         self.gm_worker.register_task(str(config["gearmanworker_apiai"]),self.run)
         self.wolframkey = config["wolfram_key"]
     def run(self,gearman_worker,gearman_job):
-        result,lastresult = "",""
+        result,lastresult = "",[]
         try:
             request = json.loads(gearman_job.data)
             session = request['uId']
@@ -24,30 +24,68 @@ class Alligator(object):
             apirequest = "http://api.wolframalpha.com/v2/query?input="+query+"&appid="+self.wolframkey+"&format=image"
             value = requests.get(apirequest)
             tags = ET.fromstring(value._content)
+            imagelistings = []
             for each in tags:
                 if 'title' in each.attrib:
-                    print 'title : ',each.attrib['title']
+                    #print 'title : ',each.attrib['title']
                     if each.attrib['title'].lower().strip() == "result".lower():
                         text = each.find('subpod')
                         for all in text:
-                            print "all : ",all.attrib
-                            result = result + all.attrib['title'] + "<br>"
+                            #print "all : ",all.attrib
+                            if 'title' in all.attrib:
+                                if channel == 'ui':
+                                    result = result + all.attrib['title'] + "<br>"
+                                else:
+                                    result = result + all.attrib['title'] + "\n"
+                                imagelistings.append(all.attrib['src'])
                         break
-                    else:
+                    elif "input" not in each.attrib['title'].lower().strip():
                         text = each.find('subpod')
                         for all in text:
-                            print "all : ",all.attrib
-                            lastresult = all.attrib['title'] + "<br>"
+                            #print "all : ",all.attrib
+                            if 'title' in all.attrib:
+                                if all.attrib['title'].strip():
+                                    print all.attrib
+                                    lastresult.append((each.attrib['title'],all.attrib['title']))
+                                if 'src' in all.attrib:
+                                    print "title :",each.attrib['title']
+                                    imagelistings.append(all.attrib['src'])
                 else:
                     print "attribute without title : ",each.attrib
-            if not result:
-                if lastresult:
-                    result = lastresult
+            imageflag = False
+            print "RESULT : ",result
+            if not result.strip():
+                if channel == 'ui':
+                    if lastresult:
+                        print "in lastresult"
+                        currenttitle = ""
+                        for each,all in lastresult:
+                            if each != currenttitle:
+                                currenttitle = each
+                                result = result + "<br><b><u> "+each+": </u></b>"
+                            result = result + "<br> "+all
+                    elif imagelistings:
+                        imageflag = True
+                        print "in imagelistings",imagelistings
+                        for each in imagelistings:
+                            result = result + '<img src = "'+each+'" /> <br>'
+                    else:
+                        result = self.randomResponses()
                 else:
-                    result = self.randomResponses()
+                    if lastresult:
+                        print "in lastresult"
+                        currenttitle = ""
+                        for each,all in lastresult:
+                            if each != currenttitle and each.lower().strip() != "response":
+                                currenttitle = each
+                                result = result + "\n"+each+": "
+                            result = result + "\n \t "+all
+                    else:
+                        result = self.randomResponses()
+            print "RESULT : ",result
             if "data not available" in result:
                 result = self.randomResponses()
-            if "wolfram" in result.lower() :
+            if "wolfram" in result.lower() and not imageflag:
                 if "stephen" not in result.lower():
                     resultlist = result.split()
                     for each,value in enumerate(resultlist):
@@ -57,7 +95,8 @@ class Alligator(object):
                             result = " ".join(resultlist)
                 else:
                     result = result.replace("Stephen Wolfram","Kannan Piedy")
-            return json.dumps({'result':result,'sessionId':'ui_'+session})
+            #result = '<img src = "http://localhost:7000/image/logo.png" />'
+            return json.dumps({'result':result,'sessionId':channel+'_'+session})
         except Exception,e:
             print "Exception in Run : ",e
     

@@ -5,6 +5,7 @@
    "serverport":7000,
    "tcp_type":"websocket",
    "wolfram_key":"3W3HRP-23P5U3UV53",
+   "Telegram":{"key":"285763794:AAFbo6n0gROS8zn2s375MITdruBAUBujFf0"},
    "gearmanworker_apiai":"alligator",
    "googlesearchkey":"AIzaSyCJbOid3rge9DY_N9p4_cDDaHYWd0ompQ8",
    "collection_name":"db_alligator"

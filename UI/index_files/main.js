@@ -40,7 +40,7 @@ function addMsg(msgText, owner) {
         msgHtml = '<div class="admin-chat"><div class="well inner-admin-chat">' + msgText + '<span class="admin-name">me</span><span class="time-stamp">' + time_stamp + '</span></div></div>';
     }
     else{
-        msgText = urlify(msgText);
+        //msgText = urlify(msgText);
         length_of_text = msgText.length;
         if(length_of_text > 140){
             var new_text1 = getNewText(msgText);           
